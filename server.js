@@ -35,3 +35,32 @@ app.use(bodyParser.urlencoded({"extended": false}));
 // Set handlebars
 app.engine("handlebars", exphbs({"defaultLayout": "main"}));
 app.set("view engine", "handlebars");
+
+/****************************************************************************
+ ****************************************************************************
+    
+    Set up controllers
+    
+*****************************************************************************
+*****************************************************************************/
+// Override POST methods to handle PATCH and DELETE
+app.use(methodOverride("_method"));
+
+// Set controllers directory
+const directory_controllers = path.join(__dirname, "controllers");
+
+// Talk to the burger controller
+app.use("/", require(
+    path.join(directory_controllers, "burger_controller.js"))
+);
+
+
+
+/****************************************************************************
+ ****************************************************************************
+    
+    Listen for connections on the port
+    
+*****************************************************************************
+*****************************************************************************/
+app.listen(PORT, () => console.log(`App listening on ${PORT}.`));
